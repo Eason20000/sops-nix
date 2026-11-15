@@ -424,6 +424,7 @@ in
     # Darwin: load secrets once on login
     launchd.agents.sops-nix = {
       enable = true;
+      domain = "user";
       config = {
         Program = script;
         EnvironmentVariables = cfg.environment;
@@ -439,7 +440,7 @@ in
       let
         darwin =
           let
-            domain-target = "gui/$(id -u ${config.home.username})";
+            domain-target = "user/$(id -u ${config.home.username})";
           in
           ''
             /bin/launchctl bootout ${domain-target}/org.nix-community.home.sops-nix && true
